@@ -6,6 +6,7 @@ import ParticlesBg from 'particles-bg';
 
 
 
+
 const Section = styled.section`
   height: 100vh;
   display: flex;
@@ -57,6 +58,20 @@ const Button = styled(motion.button)`
     margin-bottom: 0.5rem;
 `;
 
+const Button2 = styled(motion.button)`
+    padding: 1rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    outline: none;
+    curser: pointer;
+    background:transparent;
+    color: #F3B0C3;
+    border-color: #fff;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+`;
+
 const ColumnRight = styled.div`
     display: flex;
     justify-content: center;
@@ -67,8 +82,11 @@ const ColumnRight = styled.div`
 
 const Landing = () => {
     const history = useHistory();
-    const handleClick = () => {
-        history.push("/MusicRoom");
+    const handleClickCreate = () => {
+        history.push("/create");
+    }
+    const handleClickJoin = () => {
+        history.push("/join");
     }
     const fadeLeft = {
         hidden: {opacity: 0, x: -100},
@@ -90,20 +108,20 @@ const Landing = () => {
                             animate='visible'
                             transition={{duration: 1}}
                         >Discover <span style={{color:'#F3B0C3'}}>new music</span> and curate <span style={{color:'#F3B0C3'}}>innovative playlists</span>.</motion.p>
-                        <Button onClick = {handleClick}
+                        <Button onClick = {handleClickCreate}
                             type = "button"
                             whileHover={{ scale: 1.05}}
                             whileTap={{scale: 0.95, backgroundColor: '#F3B0C3', border: 'none', color: '#000'}} 
                             initial={{opacity: 0}}
                             animate={{opacity: 1, transition: {duration: 2}}} 
                         >Create a room now!</Button>
-                        <Button onClick = {handleClick}
+                        <Button2 onClick = {handleClickJoin}
                             type = "button"
                             whileHover={{ scale: 1.05}}
                             whileTap={{scale: 0.95, backgroundColor: '#F3B0C3', border: 'none', color: '#fff'}} 
                             initial={{opacity: 0}}
                             animate={{opacity: 1, transition: {duration: 2}}} 
-                        >Join a room</Button>
+                        >Join a room</Button2>
                         </ColumnLeft>
                         <ColumnRight>
                         </ColumnRight>
