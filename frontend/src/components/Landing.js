@@ -26,7 +26,7 @@ const Container = styled.section`
 
 const ColumnLeft = styled.div`
     display: flex;
-    color: #000;
+    color: #fff;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
@@ -38,7 +38,7 @@ const ColumnLeft = styled.div`
     }
 
     p {
-        marign: 2rem 0;
+        margin: 2rem 0;
         font-size: 4rem;
         line-height: 1.1;
     }
@@ -51,9 +51,10 @@ const Button = styled(motion.button)`
     outline: none;
     curser: pointer;
     background:transparent;
-    color: #131313;
+    color: #fff;
     border-color: #F3B0C3;
     font-weight: 500;
+    margin-bottom: 0.5rem;
 `;
 
 const ColumnRight = styled.div`
@@ -75,7 +76,7 @@ const Landing = () => {
     }
     return (
                 <Section>
-                <ParticlesBg color="#131313" num={100} type="cobweb" bg={true} />
+                <ParticlesBg color="#131313" num={50} type="circle" bg={true} />
                 <Container>
                     <ColumnLeft>
                         <motion.h1
@@ -95,7 +96,14 @@ const Landing = () => {
                             whileTap={{scale: 0.95, backgroundColor: '#F3B0C3', border: 'none', color: '#000'}} 
                             initial={{opacity: 0}}
                             animate={{opacity: 1, transition: {duration: 2}}} 
-                        >Create or join a room now!</Button>
+                        >Create a room now!</Button>
+                        <Button onClick = {handleClick}
+                            type = "button"
+                            whileHover={{ scale: 1.05}}
+                            whileTap={{scale: 0.95, backgroundColor: '#F3B0C3', border: 'none', color: '#fff'}} 
+                            initial={{opacity: 0}}
+                            animate={{opacity: 1, transition: {duration: 2}}} 
+                        >Join a room</Button>
                         </ColumnLeft>
                         <ColumnRight>
                         </ColumnRight>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Landing from './Landing';
 import {render} from 'react-dom';
+import Landing from './Landing';
 
 export default class App extends Component {
     constructor(props) {
@@ -9,11 +9,15 @@ export default class App extends Component {
 
     render() {
         return (
-            <h1>Testing react code</h1>
+            <div>
+                <Landing />
+            </div>
+            
+            
         )
     }
 }
 
 const appDiv = document.getElementById("app");
 render(<App/>, appDiv);
-// export default App;
+//export default App;

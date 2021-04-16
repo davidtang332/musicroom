@@ -1,8 +1,8 @@
 import App from './components/App'
 import ReactDOM from 'react-dom';
 
-// ReactDOM.render(
-//     <App />, document.getElementById('app')
-//   );
+
+// const appDiv = document.getElementById("app");
+// ReactDOM.render(<App />, appDiv);
 
 
