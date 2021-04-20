@@ -11,24 +11,15 @@ import {Link} from "react-router-dom";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import {MuiThemeProvider, createMuiTheme} from "@material-ui/core/styles";
 
-// const theme = createMuiTheme({
-//     typography: {
-//         fontFamily: [
-//             '-apple-system',
-//             'BlinkMacSystemFont',
-//             'Segoe UI',
-//             'Roboto',
-//             'Oxygen',
-//             'Ubuntu',
-//             'Cantarell',
-//             'Fira Sans',
-//             'Droid Sans',
-//             'Helvetica Neue',
-//             'sans-serif'
-//         ].join(','),
-//     },
-// });
+const theme = createMuiTheme({
+    typography: {
+        fontFamily: [
+            'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS'
+        ].join(','),
+    },
+});
 
 export default class CreateRoom extends Component {
     defaultVotes = 2;
@@ -61,7 +52,7 @@ export default class CreateRoom extends Component {
         });
     }
 
-    handleRoomCreation() {
+    handleRoomCreation(props) {
          const requestOptions = {
              method: "POST",
              headers: {"Content-Type": "application/json"},
@@ -73,69 +64,73 @@ export default class CreateRoom extends Component {
          };
          fetch("/api/create-room", requestOptions)
             .then((response) => response.json())
-            .then((data) => console.log(data));
+            .then((data) => this.props.history.push('/room/' + data.code));
         // console.log(this.state);
      }
 
     render() {
         return (
-            <Grid container spacing = {1}> 
-                {/* 8 pixels spacing */}
-                <Grid item xs={12} align="center">
-                    <Typography component='h4' variant='h4'>
-                        Settings
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} align="center">
-                    <FormControl component="fieldset">
-                        <FormHelperText>
-                            <div align="center">
-                                Guest Control of Playback State
-                            </div>
-                        </FormHelperText>
-                        <RadioGroup row defaultValue='true' onChange={this.handlePause}>
-                            <FormControlLabel 
-                                value="true" 
-                                control={<Radio color="primary"/>}
-                                label="Play/Pause"
-                                labelPlacement="bottom"
+            <div className="center">
+                <Grid container spacing = {1}> 
+                    {/* 8 pixels spacing */}
+                    <Grid item xs={12} align="center">
+                        <ThemeProvider theme ={theme}>
+                        <Typography component='h4' variant='h4'>
+                            Settings
+                        </Typography>
+                        </ThemeProvider>
+                    </Grid>
+                    <Grid item xs={12} align="center">
+                        <FormControl component="fieldset">
+                            <FormHelperText>
+                                <div align="center">
+                                    Guest Control of Playback State
+                                </div>
+                            </FormHelperText>
+                            <RadioGroup row defaultValue='true' onChange={this.handlePause}>
+                                <FormControlLabel 
+                                    value="true" 
+                                    control={<Radio color="primary"/>}
+                                    label="Play/Pause"
+                                    labelPlacement="bottom"
+                                />
+                                <FormControlLabel
+                                    value="false" 
+                                    control={<Radio color="secondary"/>}
+                                    label="No Control"
+                                    labelPlacement="bottom"
+                                />
+                            </RadioGroup>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} align="center">
+                        <FormControl>
+                            <TextField 
+                                required={true}
+                                type="number" 
+                                onChange={this.handleVotesChange}
+                                defaultValue={this.defaultVotes}
+                                inputProps={{
+                                    // 2 brackets because it passes an extra js object
+                                    min: 1,
+                                    style: {textAlign: "center"}
+                                }}
                             />
-                             <FormControlLabel
-                                value="false" 
-                                control={<Radio color="secondary"/>}
-                                label="No Control"
-                                labelPlacement="bottom"
-                            />
-                        </RadioGroup>
-                    </FormControl>
+                            <FormHelperText>
+                                <div align="center">
+                                    Votes Required to Skip Current Song:
+                                </div>
+                            </FormHelperText>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} align="center">
+                        <Button color="secondary" variant="contained" onClick={this.handleRoomCreation}>Create a Room</Button>
+                    </Grid>
+                    <Grid item xs={12} align="center">
+                        <Button color="primary" variant="contained" to="/" component={Link}>Back</Button>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} align="center">
-                    <FormControl>
-                        <TextField 
-                            required={true}
-                            type="number" 
-                            onChange={this.handleVotesChange}
-                            defaultValue={this.defaultVotes}
-                            inputProps={{
-                                // 2 brackets because it passes an extra js object
-                                min: 1,
-                                style: {textAlign: "center"}
-                            }}
-                        />
-                        <FormHelperText>
-                            <div align="center">
-                                Votes Required to Skip Current Song:
-                            </div>
-                        </FormHelperText>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={12} align="center">
-                    <Button color="secondary" variant="contained" onClick={this.handleRoomCreation}>Create a Room</Button>
-                </Grid>
-                <Grid item xs={12} align="center">
-                    <Button color="primary" variant="contained" to="/" component={Link}>Back</Button>
-                </Grid>
-            </Grid>
+            </div>
         )
         
     };

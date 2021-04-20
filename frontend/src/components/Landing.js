@@ -4,6 +4,9 @@ import {motion} from 'framer-motion';
 import {useHistory} from 'react-router-dom';
 import ParticlesBg from 'particles-bg';
 
+import Button from "@material-ui/core/Button";
+import Info from'./Info';
+
 
 
 
@@ -44,19 +47,19 @@ const ColumnLeft = styled.div`
         line-height: 1.1;
     }
 `;
-const Button = styled(motion.button)`
-    padding: 1rem 1rem;
-    font-size: 1rem;
-    border: 1px solid #fff;
-    border-radius: 4px;
-    outline: none;
-    curser: pointer;
-    background:transparent;
-    color: #fff;
-    border-color: #F3B0C3;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-`;
+// const Button = styled(motion.button)`
+//     padding: 1rem 1rem;
+//     font-size: 1rem;
+//     border: 1px solid #fff;
+//     border-radius: 4px;
+//     outline: none;
+//     curser: pointer;
+//     background:transparent;
+//     color: #fff;
+//     border-color: #F3B0C3;
+//     font-weight: 500;
+//     margin-bottom: 0.5rem;
+// `;
 
 const Button2 = styled(motion.button)`
     padding: 1rem 1rem;
@@ -80,13 +83,17 @@ const ColumnRight = styled.div`
     position: relative;
 `;
 
-const Landing = () => {
+function Landing() {
     const history = useHistory();
     const handleClickCreate = () => {
         history.push("/create");
     }
     const handleClickJoin = () => {
         history.push("/join");
+    }
+
+    const handleClickInfo = () => {
+        history.push("/info");
     }
     const fadeLeft = {
         hidden: {opacity: 0, x: -100},
@@ -108,13 +115,13 @@ const Landing = () => {
                             animate='visible'
                             transition={{duration: 1}}
                         >Discover <span style={{color:'#F3B0C3'}}>new music</span> and curate <span style={{color:'#F3B0C3'}}>innovative playlists</span>.</motion.p>
-                        <Button onClick = {handleClickCreate}
+                        <Button2 onClick = {handleClickCreate}
                             type = "button"
                             whileHover={{ scale: 1.05}}
                             whileTap={{scale: 0.95, backgroundColor: '#F3B0C3', border: 'none', color: '#000'}} 
                             initial={{opacity: 0}}
                             animate={{opacity: 1, transition: {duration: 2}}} 
-                        >Create a room now!</Button>
+                        >Create a room now!</Button2>
                         <Button2 onClick = {handleClickJoin}
                             type = "button"
                             whileHover={{ scale: 1.05}}
@@ -122,6 +129,20 @@ const Landing = () => {
                             initial={{opacity: 0}}
                             animate={{opacity: 1, transition: {duration: 2}}} 
                         >Join a room</Button2>
+                        <Button2 onClick = {handleClickInfo}
+                            type = "button"
+                            whileHover={{ scale: 1.05}}
+                            whileTap={{scale: 0.95, backgroundColor: '#F3B0C3', border: 'none', color: '#fff'}} 
+                            initial={{opacity: 0}}
+                            animate={{opacity: 1, transition: {duration: 2}}} 
+                        >Info</Button2>
+                        <Button 
+                        variant="contained" 
+                        color="#F3B0C3" 
+                        onClick={handleClickInfo}
+                    >
+                        Enter Room
+                    </Button>
                         </ColumnLeft>
                         <ColumnRight>
                         </ColumnRight>

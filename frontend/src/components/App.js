@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import Landing from './Landing';
-import RoomJoin from './RoomJoin';
-import CreateRoom from './CreateRoom';
 import {BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-router-dom';
+
+import Landing from './Landing';
+import JoinRoom from './JoinRoom';
+import CreateRoom from './CreateRoom';
+import Room from './Room';
+import Info from './Info';
+
 
 
 export default class App extends Component {
@@ -13,13 +17,15 @@ export default class App extends Component {
 
     render() {
         return (
-            <Router>
-                <Switch>
-                    <Route exact path="/" component={Landing}/>
-                    <Route path="/join" component={RoomJoin}/>
-                    <Route path="/create" component={CreateRoom}/>
-                </Switch>
-            </Router>
+                <Router>
+                    <Switch>
+                        <Route exact path="/" component={Landing}/>
+                        <Route path="/join" component={JoinRoom}/>
+                        <Route path="/create" component={CreateRoom}/>
+                        <Route path="/room/:roomCode" component={Room}/>
+                        <Route path="/info" component={Info}/>
+                    </Switch>
+                </Router>
             
             
         )
