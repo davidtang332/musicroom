@@ -136,13 +136,13 @@ function Landing() {
                             initial={{opacity: 0}}
                             animate={{opacity: 1, transition: {duration: 2}}} 
                         >Info</Button2>
-                        <Button 
+                        {/* <Button 
                         variant="contained" 
                         color="#F3B0C3" 
                         onClick={handleClickInfo}
                     >
                         Enter Room
-                    </Button>
+                    </Button> */}
                         </ColumnLeft>
                         <ColumnRight>
                         </ColumnRight>

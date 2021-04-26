@@ -26,26 +26,26 @@ function JoinRoom(props) {
     function joinRoomPressed() {
         // send POST request to backend to join existing room
         console.log("Room Code:" + roomCode)
-        const requestOptions = {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                code: roomCode,
-            }),
-        };
-        fetch("/api/join-room", requestOptions)
-            .then((response) => {
-            if (response.ok) {
-                props.history.push(`/room/${roomCode}`);
-            } else {
-                setError("Room not found. Try another code.");
-                console.log('Error:' + error);
-                // not displaying error message
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+        // const requestOptions = {
+        //     method: "POST",
+        //     headers: {"Content-Type": "application/json"},
+        //     body: JSON.stringify({
+        //         code: roomCode,
+        //     }),
+        // };
+        // fetch("/api/join-room", requestOptions)
+        //     .then((response) => {
+        //     if (response.ok) {
+        //         props.history.push(`/room/${roomCode}`);
+        //     } else {
+        //         setError("Room not found. Try another code.");
+        //         console.log('Error:' + error);
+        //         // not displaying error message
+        //     }
+        // })
+        // .catch((error) => {
+        //     console.log(error);
+        // });
     }
     return (
         <div className="center">
@@ -57,7 +57,7 @@ function JoinRoom(props) {
                 </Grid>
                 <Grid item xs={12} align="center">
                     <TextField
-                        error={!!error}
+                        error={error}
                         label="Code"
                         placeholder="Enter a room code"
                         value={roomCode}
