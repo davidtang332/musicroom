@@ -65,14 +65,6 @@ class JoinRoom(APIView):
         code = request.data.get(self.lookup_url_kwarg)
         if code != None:
             room_result = Room.objects.filter(code=code)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-            # print(room_result)
->>>>>>> Stashed changes
-=======
-            # print(room_result)
->>>>>>> Stashed changes
             if len(room_result) > 0:
                 room = room_result[0]
                 self.request.session['room_code'] = code
