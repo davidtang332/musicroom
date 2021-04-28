@@ -66,6 +66,10 @@ class JoinRoom(APIView):
         if code != None:
             room_result = Room.objects.filter(code=code)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+            # print(room_result)
+>>>>>>> Stashed changes
 =======
             # print(room_result)
 >>>>>>> Stashed changes
