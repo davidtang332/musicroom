@@ -25,6 +25,7 @@ function Room(props) {
             <p>Votes Needed To Skip: {votesToSkip}</p>
             <p>Guest Can Pause: {guestCanPause.toString()}</p>
             <p>Host: {isHost.toString()}</p>
+            <a href="www.youtube.com"></a>
         </div>
     )
 }
