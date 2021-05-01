@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Room</title>
+    {% load static %}
+    <script src="https://kit.fontawesome.com/72ae810c7a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/test1.css' %}">
+    /*
+    <style>
+      /* Style The Dropdown Button */
+      .dropbtn {
+        background-color: black;
+        color: red;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+      
+      /* The container <div> - needed to position the dropdown content */
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      
+      /* Dropdown Content (Hidden by Default) */
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+      }
+      
+      /* Links inside the dropdown */
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+      
+      /* Change color of dropdown links on hover */
+      .dropdown-content a:hover {background-color: #f1f1f1}
+      
+      /* Show the dropdown menu on hover */
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+      
+      /* Change the background color of the dropdown button when the dropdown content is shown */
+      .dropdown:hover .dropbtn {
+        background-color: #030f03;
+      }
+      #topNav ul li ul{
+        max-height:250px;/* you can change as you need it */
+        overflow:auto;/* to get scroll */
+      }
+      </style>
+    <script>
+      function list_votes(){
+        var vote_arr = JSON.parse("{{vote_list|escapejs}}");
+        var song_votes = JSON.parse("{{song_votes|escapejs}}");
+        var cont = document.getElementById('vote');
+        // create ul element and set the attributes.
+        var ul = document.createElement('ul');
+        ul.setAttribute('style', 'padding: 0; margin: 0;');
+        ul.setAttribute('id', 'theList');
+        
+        for (i = 0; i < vote_arr.length; i++) {
+            //var vote_list = ["asdf", "fsaff" , "pp"];
+            var li = document.createElement('li');     // create li element.
+            li.innerHTML = '<i class="fas fa-check"></i>&ensp;<i class="fas fa-times"></i>&ensp;[' + song_votes[i] + '] ' + vote_arr[i];      // assigning text to li using array value.
+            li.setAttribute('style', 'display: block;');    // remove the bullets.
+            ul.appendChild(li);     // append li to ul.
+        }
+        
+        cont.appendChild(ul);       // add list to the container.
+      } 
+
+      function list_genres() {
+        var genre_arr = JSON.parse("{{genre_list|escapejs}}");
+        var cont = document.getElementById('genres');
+        // create ul element and set the attributes.
+        var ul = document.createElement('ul');
+        ul.setAttribute('style', 'padding: 0; margin: 0;');
+        ul.setAttribute('id', 'theList');
+        ul.setAttribute('class', 'topNav');
+        
+        for (i = 0; i < genre_arr.length; i++) {
+            var li = document.createElement('li');     // create li element.
+            li.innerHTML = '<a href="#">' + genre_arr[i] + '<a/>';
+            //li.innerHTML = genre_arr[i];      // assigning text to li using array value.
+            li.setAttribute('style', 'display: block;');    // remove the bullets.
+            ul.appendChild(li);     // append li to ul.
+        }
+        
+        cont.appendChild(ul);       // add list to the container.
+      }
+
+      function list_queue(){
+        var queue_arr = JSON.parse("{{queue_list|escapejs}}");
+        var cont = document.getElementById('queue');
+        // create ul element and set the attributes.
+        var ul = document.createElement('ul');
+        ul.setAttribute('style', 'padding: 0; margin: 0;');
+        ul.setAttribute('id', 'theList');
+        
+        for (i = 0; i < queue_arr.length; i++) {
+            //var queue_list = ["asdf", "fsaff" , "pp"];
+            var li = document.createElement('li');     // create li element.
+            li.innerHTML = queue_arr[i];      // assigning text to li using array value.
+            li.setAttribute('style', 'display: block;');    // remove the bullets.
+            ul.appendChild(li);
+            var linebreaking = document.createElement('br');
+            ul.appendChild(linebreaking);     // append li to ul.
+        }
+        
+        cont.appendChild(ul);       // add list to the container.
+      } 
+
+
+      function openSlideMenu() {
+        document.getElementById('menu').style.width='250px';
+        document.getElementById('content').style.marginLeft='250px';
+        /*
+        var newVideo = document.createElement("iframe");
+        newVideo.setAttribute("src", "https://www.youtube.com/embed/XyNlqQId-nk");
+        var ul = document.getElementById("dynamic-list");
+        var li = document.createElement("li");
+        li.appendChild(newVideo);
+        ul.appendChild(li);
+        */
+      }
+      function closeSlideMenu() {
+        document.getElementById('menu').style.width='0px';
+        document.getElementById('content').style.marginLeft='0px';
+      }
+      function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+
+      
+      var player;
+
+      // this function gets called when API is ready to use
+      function onYouTubePlayerAPIReady() {
+          // create the global player from the specific iframe (#video)
+          player = new YT.Player('video', {
+              events: {
+                  // call this function when player is ready to use
+                  'onReady': onPlayerReady
+              }
+          });
+      }
+
+      function move() {
+        var duration = player.getDuration();
+        var elem = document.getElementById("myBar");
+        var id = setInterval(frame, 10);
+        function frame() {
+          var current_time = player.getCurrentTime();
+          elem.style.width = (player.getCurrentTime()/duration)*100 + "%"; 
+        }
+      }
+
+      function pause() {
+        var elem = document.getElementById("myBar");
+        var id = setInterval(frame, 10);
+        var hold = 0;
+        function frame() {
+          //elem.style.width = (player.playerInfo.currentTime()/player.getDuration())*100 + "%";
+          elem.style.width = (player.getCurrentTime()/duration)*100 + "%";
+        }
+      }
+
+      function onPlayerReady(event) {
+
+          // bind events
+          var playButton = document.getElementById("play-button");
+          playButton.addEventListener("click", function() {
+              player.playVideo();
+          });
+
+          var pauseButton = document.getElementById("pause-button");
+          pauseButton.addEventListener("click", function() {
+              player.pauseVideo();
+          });
+
+          var stopButton = document.getElementById("stop-button");
+          stopButton.addEventListener("click", function() {
+              player.stopVideo();
+          });
+
+      }
+
+      // Inject YouTube API script
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/player_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); 
+    </script>
+  </head>
+  <body>
+    <div id="content">
+      <span class="slide">
+        <a href="#" onclick="openSlideMenu()">
+          <i class="fas fa-bars fa-2x"></i>
+        </a>
+      </span>
+      <div id="menu" class="nav">
+        <a href="#" class="close" onclick="closeSlideMenu()">
+          <i class="fas fa-times"></i>
+        </a>
+        <li><a href="#">Home</a></li>
+      </div>
+      <div class="room-title">
+        Room
+      </div>
+    </div>
+    <div class="row">
+      <div class="hud-bar">
+        <h2 id = "vidTitle"> set song title </h2>
+        <script>
+          var queue_arr = JSON.parse("{{queue_list|escapejs}}");
+          var title = '<i class="fas fa-volume-off fa"></i>&ensp;' + queue_arr[0];
+          document.getElementById("vidTitle").innerHTML = title;
+        </script>
+      </br>
+        <div id="myProgress">
+          <div id="myBar"></div>
+        </div>
+        <div class="song-buttons">
+          <button id="play-button" onclick="move()"><i class="fas fa-play fa-2x"></i></button>
+          <button id="pause-button" onclick = "pause()"><i class="fas fa-pause fa-2x"></i></button>
+          <button id="stop-button"><i class="fas fa-stop fa-2x"></i></button>
+          <ul id="dynamic-list">
+          </ul>
+        </div>
+        <div class="active-listeners">
+          <h4 style="font-weight: 100;">(num) listeners in this room</h4>
+        </div>
+      </div>
+      <div class="column">
+        <div class="row">
+          <div class="bar-left">
+            <div class="content-title">
+              Queue
+            </div>
+          </div>
+          <div class="queue" id = "queue">
+            <script> list_queue(); </script>
+          </div>
+          </div>
+        </div>
+      <div class="column">
+        <div class="row">
+          <div class="dropdown">
+            <button class="dropbtn">Genres</button>
+            <div class="dropdown-content" id='genres'>
+              <script>
+                list_genres();
+              </script>
+            </div>
+          </div>
+          <div class="bar-right">
+            <div class="content-title">
+              Recommend song
+            </div>
+          </div>
+          <form class = "rec-song" action = "submit" method="post">
+            {% csrf_token %}
+            <input type = "text" name = "recommend" value = "" style="width: 85%; border: 0; box-shadow: none; outline:none;"></input>
+            <button type="submit" value="submit" style="width: 15%; border: 0; box-shadow: none; outline:none;">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+          <div class="bar-right">
+            <div class="content-title">
+              Vote
+            </div>
+          </div>
+          <div class="song-list" id="vote" style="height: 300px"></div>
+          <script>
+            list_votes();
+          </script>
+          </div>
+        </br>
+          <!-- <iframe width="894" height="503" src="https://www.youtube.com/embed/{{youtubeKey}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+          <iframe id="video" width="190" height="10" src="https://www.youtube.com/embed/{{youtubeKey}}?enablejsapi=1&html5=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+
