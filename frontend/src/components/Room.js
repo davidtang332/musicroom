@@ -25,10 +25,6 @@ function Room(props) {
             <p>Votes Needed To Skip: {votesToSkip}</p>
             <p>Guest Can Pause: {guestCanPause.toString()}</p>
             <p>Host: {isHost.toString()}</p>
-<<<<<<< Updated upstream
-=======
-            <a href="test1/">i want my mommy</a>
->>>>>>> Stashed changes
         </div>
     )
 }
